@@ -1,13 +1,14 @@
 package com.example.bookingplatform.hotel;
 
+import com.example.bookingplatform.hotel.dto.HotelCreateDto;
 import com.example.bookingplatform.hotel.dto.HotelResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/hotel")
@@ -15,10 +16,34 @@ import java.util.List;
 public class HotelController {
     private final HotelService hotelService;
 
+    @PostMapping
+    public String createHotel(@ModelAttribute HotelCreateDto createDto) {
+        hotelService.create(createDto);
+        return "index";
+    }
+
     @GetMapping
     public String getAllHotels(Model model) {
         List<HotelResponseDto> responseDtos = hotelService.getAllHotels();
         model.addAttribute("hotels", responseDtos);
         return "index";
+    }
+
+    @GetMapping("/create")
+    public String getCreatPage() {
+        return "hotel/create";
+    }
+
+    @GetMapping("/{id}/rooms")
+    public String getHotelRooms(@PathVariable Integer id) {
+        return "index";
+    }
+
+    @GetMapping("/{id}/update")
+    public String getEditHotel(@PathVariable Integer id, Model model) {
+        HotelResponseDto hotelResponseDto = hotelService.getById(id);
+        model.addAttribute("hotel", hotelResponseDto);
+
+        return "hotel/update";
     }
 }

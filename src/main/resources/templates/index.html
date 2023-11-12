@@ -6,15 +6,18 @@
     <link rel="stylesheet" th:href="@{css/style.css}" href="../static/css/style.css">
 </head>
 <body>
-<div class="header">
+<div class="header container">
     <h1 class="logo">Booking.com</h1>
     <div>
+        <a th:href="@{/hotel/create}">
+            <button class="btn">Add hotel</button>
+        </a>
         <button class="btn">Register</button>
         <button class="btn">Sign in</button>
     </div>
 </div>
 
-<div class="search">
+<div class="center-form">
     <form class="search-form" th:action="@{/hotel}" method="get">
         <select class="input" name="" id="">
             <option th:each="cityName: ${T(com.example.bookingplatform.address.City).values()}"
@@ -29,9 +32,17 @@
     </form>
 </div>
 
-<th:block th:if="${hotels} != null">
-    <h1 th:each="hotel: ${hotels}" th:text="${hotel.name}"></h1>
-</th:block>
+<div th:if="${hotels} != null" class="container">
+    <div class="hotel-card" th:each="hotel: ${hotels}">
+        <h1 th:text="${hotel.name}"></h1>
+        <a th:href="@{hotel/{hotelId}/rooms(hotelId=${hotel.id})}">
+            <button class="btn secondary">See rooms</button>
+        </a>
+        <a th:href="@{hotel/{hotelId}/update(hotelId=${hotel.id})}">
+            <button class="btn secondary">Edit hotel</button>
+        </a>
+    </div>
+</div>
 
 
 </body>

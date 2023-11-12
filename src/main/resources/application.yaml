@@ -1,8 +1,8 @@
 spring:
   datasource:
-    password: 1
+    password: postgres
     username: postgres
-    url: jdbc:postgresql://localhost:9000/postgres
+    url: jdbc:postgresql://localhost:5432/postgres
   jpa:
     show-sql: true
     hibernate:
@@ -10,3 +10,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

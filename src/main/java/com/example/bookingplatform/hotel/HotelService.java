@@ -1,5 +1,6 @@
 package com.example.bookingplatform.hotel;
 
+import com.example.bookingplatform.hotel.dto.HotelCreateDto;
 import com.example.bookingplatform.hotel.dto.HotelResponseDto;
 import com.example.bookingplatform.hotel.entity.Hotel;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +16,16 @@ public class HotelService {
 
     public List<HotelResponseDto> getAllHotels() {
         List<Hotel> all = hotelRepository.findAll();
-        return all
-                .stream()
-                .map(hotelDtoMapper::toResponseDto)
-                .toList();
+        return hotelDtoMapper.toResponseDto(all);
+    }
+
+    public void create(HotelCreateDto createDto) {
+        Hotel entity = hotelDtoMapper.toEntity(createDto);
+        hotelRepository.save(entity);
+    }
+
+    public HotelResponseDto getById(Integer id) {
+        Hotel hotel = hotelRepository.findById(id).orElseThrow();
+        return hotelDtoMapper.toResponseDto(hotel);
     }
 }
