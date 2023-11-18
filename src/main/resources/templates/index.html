@@ -19,15 +19,15 @@
 
 <div class="center-form">
     <form class="search-form" th:action="@{/hotel}" method="get">
-        <select class="input" name="" id="">
+        <select class="input" name="city">
             <option th:each="cityName: ${T(com.example.bookingplatform.address.City).values()}"
                     th:text="${cityName}"
                     th:value="${cityName}"
             ></option>
         </select>
-        <input class="input" type="datetime-local">
-        <input class="input" type="datetime-local">
-        <input class="input" type="number">
+        <input class="input" name="startDate" type="datetime-local">
+        <input class="input" name="endDate" type="datetime-local">
+        <input class="input" name="roomCount" type="number" placeholder="Number of rooms">
         <button class="btn secondary" type="submit">Search</button>
     </form>
 </div>
@@ -35,9 +35,15 @@
 <div th:if="${hotels} != null" class="container">
     <div class="hotel-card" th:each="hotel: ${hotels}">
         <h1 th:text="${hotel.name}"></h1>
-        <a th:href="@{hotel/{hotelId}/rooms(hotelId=${hotel.id})}">
+        <a th:href="@{hotel/{hotelId}/rooms(
+        hotelId = ${hotel.id},
+        startDate=${param.get('startDate')},
+        endDate=${param.get('endDate')},
+        roomCount = ${param.get('roomCount')}
+        )}">
             <button class="btn secondary">See rooms</button>
         </a>
+
         <a th:href="@{hotel/{hotelId}/update(hotelId=${hotel.id})}">
             <button class="btn secondary">Edit hotel</button>
         </a>
