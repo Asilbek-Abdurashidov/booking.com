@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Booking.com</title>
+    <link href="../static/css/style.css" rel="stylesheet" th:href="@{css/style.css}"/>
+</head>
+<body>
+<div class="header container">
+    <h1 class="logo">Booking.com</h1>
+    <div>
+        <a th:href="@{/hotel/create}">
+            <button class="btn" th:text="#{add.hotel}"></button>
+        </a>
+        <button class="btn">Register</button>
+        <button class="btn">Sign in</button>
+    </div>
+</div>
+
+<div class="center-form">
+    <form class="search-form" method="get" th:action="@{/hotel}">
+        <select class="input" id="" name="">
+            <option th:each="cityName: ${T(com.example.bookingplatform.address.City).values()}"
+                    th:text="${cityName}"
+                    th:value="${cityName}"
+            ></option>
+        </select>
+        <input class="input" type="datetime-local">
+        <input class="input" type="datetime-local">
+        <input class="input" type="number">
+        <button class="btn secondary" type="submit">Search</button>
+    </form>
+</div>
+
+<div class="container" th:if="${hotels} != null">
+    <div class="hotel-card" th:each="hotel: ${hotels}">
+
+        <a th:href="@{hotel/download/{id}(id=${hotel.id})}">
+            <div class="card-img">
+                <img th:src="@{img/{fileName}(fileName=${hotel.fileName})}"/>
+            </div>
+        </a>
+        <div th:class="hotel-card-content">
+            <h1 th:text="${hotel.name}"></h1>
+            <div>
+                <a th:href="@{hotel/{hotelId}/rooms(hotelId = ${hotel.id})}"
+                   download>
+                    <button class="btn secondary">See Rooms</button>
+                </a>
+                <a th:href="@{hotel/{hotelId}/update(hotelId = ${hotel.id})}">
+                    <button class="btn secondary">Edit Hotel</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
