@@ -20,5 +20,6 @@ public class HotelController {
         List<HotelResponseDto> responseDtos = hotelService.getAllHotels();
         model.addAttribute("hotels", responseDtos);
         return "index";
+        // just comment
     }
 }
