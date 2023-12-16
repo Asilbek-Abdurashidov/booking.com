@@ -2,7 +2,6 @@ spring:
   datasource:
     url: jdbc:postgresql://db.reeahmxcmngwqenmogtb.supabase.co:5432/postgres
     username: postgres
-    password: kh#Xk?6Zb6QSn(d
   jpa:
     show-sql: true
     hibernate:
